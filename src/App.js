@@ -13,6 +13,7 @@ function App() {
   const [count, setcount] = useState(0);
   const [people, setpeople] = useState(0);
   const [emergency, setemergency] = useState(0);
+  //   const [liftAnimation, setliftAnimation] = useState(0);
 
   const handleEmergency = () => {
     setoutside([]);
@@ -20,7 +21,7 @@ function App() {
     setemergency(parseInt(emergency) ^ 1);
     if (emergency === 0) {
       alert(
-        "Emergency !!! all the people are requested to evacuate from the Lift and use stairs ..."
+        "Emergency !!! All the people are requested to evacuate from the Lift and use stairs ..."
       );
     } else {
       alert("Situation restored to normal conditions ....");
@@ -32,12 +33,14 @@ function App() {
     if (emergency === 0) {
       setoutside([...outside, parseInt(e.target.value)]);
       let val = parseInt(e.target.value);
+      if (outside.length === 0) {
+        if (currFloor > val) setflag(parseInt(1));
+        else if (currFloor < val) setflag(parseInt(0));
+      }
       if (maxFloor < val) {
         setmaxFloor(val);
         // setflag(parseInt(0));
       }
-      if (currFloor > val) setflag(parseInt(1));
-      else if (currFloor < val) setflag(parseInt(0));
       if (minFloor > val) {
         setminFloor(val);
         // setflag(parseInt(1));
@@ -68,15 +71,15 @@ function App() {
       //     setminFloor(val);
       //     setflag(parseInt(1));
       //   }
-      if (maxFloor < val) {
-        setmaxFloor(val);
-        // setflag(parseInt(0));
-      }
       if (currFloor > val) setflag(parseInt(1));
       else if (currFloor < val) setflag(parseInt(0));
       if (minFloor > val) {
         setminFloor(val);
         // setflag(parseInt(1));
+      }
+      if (maxFloor < val) {
+        setmaxFloor(val);
+        // setflag(parseInt(0));
       }
     }
   };
@@ -95,11 +98,13 @@ function App() {
       // console.log(outside);
       // console.log(inside);
       // console.log(cnt);
-
+      //   console.log(` cnt is  ${cnt}`);
+      //   if (cnt > 0 || cnt2 > 0) setliftAnimation(parseInt(1));
+      //   console.log(liftAnimation);
+      if (cnt > 0) setcount(parseInt(cnt));
       if (cnt > 0) setoutside(outside.filter((x) => x !== currFloor));
       if (cnt2 > 0) setinside(inside.filter((x) => x !== currFloor));
       if (outside.length === 0) return;
-      if (cnt > 0) setcount(parseInt(cnt));
     }
   }, [outside, currFloor, inside, emergency]);
 
@@ -108,10 +113,11 @@ function App() {
     // function for setting the minfloor,maxfloor and the direction of the lift
     // fg=0 means upwards
     // fg=1 means downwards
-    console.log(flag);
-    console.log(maxFloor);
-    console.log(currFloor);
-    console.log(minFloor);
+    // console.log(flag);
+    // console.log(maxFloor);
+    // console.log(currFloor);
+    // console.log(minFloor);
+
     if (emergency === 0) {
       setpeople(parseInt(inside.length));
       if ((outside.length === 0 && inside.length === 0) || count > 0) return;
